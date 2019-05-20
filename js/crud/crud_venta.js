@@ -1,17 +1,20 @@
 const mongoDB = require('../database/databaseHandler');
 
 exports.create = function(newItem){
-    var response = mongoDB.create('Venta',newItem);
-    console.log('create response : ',response);
-    return response;
+    return mongoDB.create('Venta',newItem)
+    .then(function(item){
+        return item;
+    });
+    //console.log('create response : ',response);
+    //return response;
 }
 
-exports.read = function(idItem){
+exports.read = function(query){
 
-    var item = {};
-    item.name = 'Venta de Mayo';
-
-    return item;
+    return mongoDB.read('Venta',query)
+    .then(function(item){
+        return item;
+    });
 }
 
 exports.update = function(itemToUpdate){

@@ -2,11 +2,27 @@ var crud = require('../crud/crud_venta');
 
 exports.rest= function(app){
     app.post('/api/venta', function (req, res) {
-        res.send(crud.create(req.body));
+
+        crud.create(req.body)
+        .then(function(item){
+            res.send(item);
+        });
+       
     });
 
     app.get('/api/venta', function (req, res) {
-        res.send(crud.read('unId :b'));
+
+        var query = {};
+
+        if(req.query._id){
+            query._id = req.query._id;
+        }
+
+        crud.read(query)
+        .then(function(item){
+            res.send(item);
+        })
+        
     });
 
     app.put('/api/venta', function (req, res) {
