@@ -9,9 +9,11 @@ exports.create = function(newItem){
     //return response;
 }
 
-exports.read = function(query){
+exports.read = function(queryParams){
 
-    return mongoDB.read('Venta',query)
+
+
+    return mongoDB.read('Venta',queryParams)
     .then(function(item){
         return item;
     });

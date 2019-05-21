@@ -1,6 +1,7 @@
 const databaseName = 'ERP_Cloud_Transportes';
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dev_user:password117@clusterfordevs-qzci0.mongodb.net/test?retryWrites=true";
+var ObjectId = require('mongodb').ObjectID;
+const uri = "mongodb+srv://dev_user:password117@clusterfordevs-qzci0.mongodb.net/ERP_Cloud_Transportes?retryWrites=true";
 
 
 exports.create = function(collection, document){
@@ -25,12 +26,22 @@ exports.create = function(collection, document){
     
 }
 
-exports.read = function(collection, query){
+exports.read = function(collection, queryParams){
     const client = new MongoClient(uri, { useNewUrlParser: true });
+
+    var query = {};
+
+    console.log('queryParams', queryParams);
+
+    if(queryParams._id){
+        query._id = new ObjectId(queryParams._id);
+    }
+
+    console.log('query',query);
 
     return client.connect()
     .then( conn => {
-        return  conn.db(databaseName).collection(collection).find(query);
+        return  conn.db(databaseName).collection(collection).find(query).toArray();
     })
     .then( result => {
         console.log('read result:', result);

@@ -12,13 +12,7 @@ exports.rest= function(app){
 
     app.get('/api/venta', function (req, res) {
 
-        var query = {};
-
-        if(req.query._id){
-            query._id = req.query._id;
-        }
-
-        crud.read(query)
+        crud.read(req.query)
         .then(function(item){
             res.send(item);
         })
